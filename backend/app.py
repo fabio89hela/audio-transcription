@@ -1,5 +1,5 @@
-from flask import Flask, request, jsonify
 import os
+from flask import Flask, request, jsonify
 from whisper_transcription import transcribe_audio
 
 app = Flask(__name__)
@@ -22,4 +22,6 @@ def transcribe():
     return jsonify({"transcription": transcription})
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    # Ottieni la porta dalla variabile di ambiente, default 5000 per sviluppo locale
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
