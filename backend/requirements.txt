@@ -1,3 +1,5 @@
 Flask
 faster-whisper
 ffmpeg
+flask-cors
+pydub
