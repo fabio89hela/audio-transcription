@@ -1,3 +1,4 @@
-Flask==2.2.2  # Framework Python per applicazioni web
-faster-whisper  # Libreria per la trascrizione audio
-ffmpeg-python  # Interfaccia Python per FFmpeg, utilizzato per la gestione audio
+Flask==2.2.2
+faster-whisper
+ffmpeg-python
+Werkzeug==2.0.3
