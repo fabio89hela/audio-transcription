@@ -1,4 +1,0 @@
-Flask==2.2.2
-faster-whisper
-ffmpeg-python
-Werkzeug==2.0.3

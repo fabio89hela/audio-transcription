@@ -2,67 +2,61 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self' https://www.gstatic.com https://apis.google.com 'unsafe-inline' 'unsafe-eval' blob: data:;">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Selezione Categoria</title>
-    <!-- Collegamento al file di stile -->
-    <link rel="stylesheet" href="styles.css">
-    <!-- Importazione dei font dal sito T-ema -->
-    <link href="https://t-ema.it/wp-content/uploads/et-fonts/GothamRoundedLight_21020.ttf" rel="stylesheet">
-    <link href="https://t-ema.it/wp-content/uploads/et-fonts/Oswald-VariableFont_wght.ttf" rel="stylesheet">
+    <title>Audio Manager</title>
+    <!-- Importazione del foglio di stile principale -->
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <!-- Importazione dei font definiti nello stile originale -->
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500&display=swap" rel="stylesheet">
 </head>
+
+<!-- Script esterni per la gestione della logica della pagina -->
+<script src="https://apis.google.com/js/api.js"></script>
+<script src="assets/js/google-drive.js"></script>
+<script src="assets/js/app.js"></script>
+
 <body>
-    <!-- Contenitore principale -->
-    <div class="main-container">
-        <!-- Intestazione del sito -->
-        <header class="header">
-            <h1>Progetto Ematologia</h1>
-            <p>Scegli una categoria per iniziare</p>
-        </header>
+    <!-- Contenitore principale con sfondo e layout centralizzato -->
+    <div class="container">
+        <h1>Audio Manager</h1>
 
-        <!-- Sezione di selezione categoria -->
-        <div class="selection-container">
-            <label for="category-select">Seleziona una categoria:</label>
-            <select id="category-select">
-                <option value="">-- Seleziona una categoria --</option>
-                <option value="emofilia">Emofilia</option>
-                <option value="oncoematologia">Oncoematologia</option>
-                <option value="ematologia">Ematologia</option>
-            </select>
+        <!-- Step 1: Selezione categoria -->
+        <div id="step-1">
+            <h2>Scegli una categoria</h2>
+            <button class="button" onclick="selectCategory('Emofilia')">Emofilia</button>
+            <button class="button" onclick="selectCategory('Oncoematologia')">Oncoematologia</button>
+            <button class="button" onclick="selectCategory('Ematologia')">Ematologia</button>
         </div>
 
-        <!-- Pulsanti di scelta azione -->
-        <div class="action-buttons">
-            <button id="upload-button" disabled>Carica File Audio</button>
-            <button id="record-button" disabled>Registra Nuovo Audio</button>
+        <!-- Step 2: Scelta opzione -->
+        <div id="step-2" class="hidden">
+            <h2>Scegli un'opzione</h2>
+            <button class="button" onclick="chooseOption('upload')">Carica un file audio</button>
+            <button class="button" onclick="chooseOption('record')">Registra un nuovo audio</button>
         </div>
+
+        <!-- Sezione di registrazione audio con visualizzazione dell'onda sonora -->
+        <div id="recording-section" class="hidden">
+            <h2>Registrazione Audio</h2>
+            <div class="waveform-container">
+                <canvas id="waveform" width="600" height="150"></canvas>
+            </div>
+            <p class="time-display" id="time-display">Tempo registrato: 0s</p>
+            <button class="button" id="record-button" onclick="toggleRecording()">Inizia Registrazione</button>
+            <button class="button hidden" id="stop-button" onclick="stopRecording()">Stop</button>
+            <button class="button hidden" id="play-button" onclick="playAudio()">Riascolta</button>
+            <button class="button hidden" id="upload-button" onclick="uploadAudio()">Carica Audio</button>
+        </div>
+
+        <!-- Contenitore per il player interattivo -->
+        <div id="audio-player-container" class="hidden">
+            <!-- Il contenuto verrà aggiunto dinamicamente dal JavaScript -->
+        </div>
+
+        <!-- Input per il caricamento dei file audio -->
+        <input type="file" id="audio-file" class="hidden" accept="audio/*" onchange="handleFileUpload(event)">
     </div>
 
-    <!-- Script per la logica interattiva -->
-    <script>
-        // Elementi DOM
-        const categorySelect = document.getElementById('category-select');
-        const uploadButton = document.getElementById('upload-button');
-        const recordButton = document.getElementById('record-button');
-
-        // Abilita i pulsanti solo se è stata selezionata una categoria
-        categorySelect.addEventListener('change', () => {
-            if (categorySelect.value) {
-                uploadButton.disabled = false;
-                recordButton.disabled = false;
-            } else {
-                uploadButton.disabled = true;
-                recordButton.disabled = true;
-            }
-        });
-
-        // Azione per i pulsanti
-        uploadButton.addEventListener('click', () => {
-            window.location.href = 'upload.html'; // Reindirizza alla pagina upload.html
-        });
-
-        recordButton.addEventListener('click', () => {
-            window.location.href = 'record.html'; // Reindirizza alla pagina record.html
-        });
-    </script>
 </body>
 </html>
