@@ -1,22 +1,49 @@
+<!-- File: record.html -->
 <!DOCTYPE html>
 <html lang="it">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registra Audio</title>
+    <!-- Collegamento al file di stile -->
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Registra il tuo Audio</h1>
-        <canvas id="waveform"></canvas>
-        <p>Tempo Registrato: <span id="timer">0:00</span></p>
-        <button id="startRecording">Inizia</button>
-        <button id="pauseRecording" disabled>Pausa</button>
-        <button id="stopRecording" disabled>Termina</button>
-        <audio id="audioPlayback" controls></audio>
-        <button id="uploadAudio" disabled>Carica Audio</button>
+    <!-- Contenitore principale -->
+    <div class="main-container">
+        <!-- Intestazione della pagina -->
+        <header class="header">
+            <h1>Registra un nuovo audio</h1>
+            <p>Premi il pulsante per iniziare la registrazione</p>
+        </header>
+
+        <!-- Sezione di registrazione -->
+        <div class="record-section">
+            <!-- Pulsanti di controllo registrazione -->
+            <button id="start-button">Inizia Registrazione</button>
+            <button id="pause-button" disabled>Pausa</button>
+            <button id="stop-button" disabled>Termina</button>
+
+            <!-- Timer per mostrare il tempo registrato -->
+            <p>Tempo registrato: <span id="timer">0:00</span></p>
+
+            <!-- Onda audio -->
+            <canvas id="waveform" width="600" height="100"></canvas>
+        </div>
+
+        <!-- Sezione di riascolto audio -->
+        <div class="playback-section">
+            <audio id="audio-playback" controls></audio>
+        </div>
+
+        <!-- Pulsante per caricare l'audio registrato -->
+        <div class="upload-section">
+            <button id="upload-button" disabled>Carica Audio</button>
+        </div>
     </div>
+
+    <!-- Script per la gestione della registrazione -->
     <script src="record.js"></script>
 </body>
 </html>
+

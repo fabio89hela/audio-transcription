@@ -1,27 +1,28 @@
-import os
-from flask import Flask, request, jsonify
-from whisper_transcription import transcribe_audio
+from flask import Flask, request, jsonify  # Importiamo Flask e moduli per gestire richieste e risposte
+import os  # Importiamo il modulo per operazioni sui file locali
+from whisper_transcription import transcribe_audio  # Importiamo la funzione di trascrizione
 
-app = Flask(__name__)
-UPLOAD_FOLDER = "uploads"
-os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+app = Flask(__name__)  # Inizializziamo l'app Flask
+UPLOAD_FOLDER = "uploads"  # Cartella dove salvare i file caricati
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)  # Creiamo la cartella se non esiste
 
+# Endpoint per la trascrizione di un file audio
 @app.route("/transcribe", methods=["POST"])
 def transcribe():
-    if "audio" not in request.files:
-        return jsonify({"error": "No audio file provided"}), 400
+    if "audio" not in request.files:  # Controlliamo se il file audio è presente nella richiesta
+        return jsonify({"error": "Nessun file audio fornito"}), 400
 
-    audio_file = request.files["audio"]
+    audio_file = request.files["audio"]  # Otteniamo il file audio dalla richiesta
+    # Verifichiamo che il formato del file sia accettabile
     if audio_file.filename.split('.')[-1] not in ["wav", "mp3"]:
-        return jsonify({"error": "Unsupported file format"}), 400
+        return jsonify({"error": "Formato file non supportato"}), 400
 
-    file_path = os.path.join(UPLOAD_FOLDER, audio_file.filename)
-    audio_file.save(file_path)
+    file_path = os.path.join(UPLOAD_FOLDER, audio_file.filename)  # Percorso completo per salvare il file
+    audio_file.save(file_path)  # Salviamo il file audio nella cartella `uploads`
 
-    transcription = transcribe_audio(file_path)
-    return jsonify({"transcription": transcription})
+    # Trascrizione del file audio
+    transcription = transcribe_audio(file_path)  # Chiamata alla funzione di trascrizione
+    return jsonify({"transcription": transcription})  # Restituiamo la trascrizione come risposta JSON
 
 if __name__ == "__main__":
-    # Ottieni la porta dalla variabile di ambiente, default 5000 per sviluppo locale
-    port = int(os.environ.get("PORT", 5000))
-    app.run(host="0.0.0.0", port=port)
+    app.run(debug=True)  # Avviamo il server Flask in modalità debug
