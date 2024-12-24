@@ -36,7 +36,7 @@ startButton.addEventListener("click", async () => {
             const formData = new FormData();
             formData.append("audio", audioBlob, "recording.wav");
 
-            fetch("https://backend-transcription.onrender.com", {
+            fetch("https://backend-transcription.onrender.com/transcribe", {
                 method: "POST",
                 body: formData,
             })
